@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Car {
 	@Column(name = "car_id")
 	private long carId;
 
+	@Pattern(regexp="[A-Za-z]*", message="Car name should not contain space and special characters")
 	@Column(name = "car_name")
 	private String carName;
 

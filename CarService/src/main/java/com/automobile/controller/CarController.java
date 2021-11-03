@@ -3,7 +3,10 @@ package com.automobile.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,8 +39,10 @@ public class CarController {
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<Car> addCarData(@RequestBody Car car) {
-		return ResponseEntity.ok(carServiceImpl.addCarData(car));
+	public ResponseEntity<Car> addCarData(@Valid @RequestBody Car car) {
+		//Remove space and special characters from name
+		Car addCar = carServiceImpl.addCarData(car);
+		return new ResponseEntity<Car>(addCar, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{carId}")

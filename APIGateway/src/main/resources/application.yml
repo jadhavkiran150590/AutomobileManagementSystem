@@ -1,0 +1,35 @@
+server:
+  port: 2021
+
+spring:
+  application:
+    name: APIGATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: CarService
+          uri: lb://CarService
+          predicates:
+            - Path=/cars/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CarService
+                fallbackuri: forward:/carfallback
+         
+        - id: CarReviewService
+          uri: lb://CarReviewService
+          predicates:
+            - Path=/carreviews/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CarReviewService
+                fallbackuri: forward:/carreviewfallback
+                
+        
+
+         
+
+
+
